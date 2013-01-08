@@ -1,0 +1,233 @@
+/* ------ Copyright (c) CJ Melegrito - mlgrto.com ----- */
+/*[22-11-12]*/
+ 
+ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+	 border: 0;
+	 font-size: 100%;
+	 font: inherit;
+	 vertical-align: baseline;
+	 outline: 0;
+	 list-style: none;
+	 margin: 0;
+	 padding: 0;
+	 }
+	 
+/* ------ LAYOUT & TYPOGRAPHY ----- */
+ 
+body {
+	font-size: 137.5%;
+	font-family: avenir, avenir-web;
+	background: #fff;
+	color: #333;
+	max-width: 720px;
+	margin: 0 auto;
+	padding: 1em;
+	}
+	
+section,footer {
+	width: 65%;
+	float: right;
+	}
+	
+article {
+	margin-bottom: 2em;
+	}
+	
+h1 {
+	font-weight: 500;
+	color: #000;
+	}
+	
+h1 span {
+	display: inline;
+	}
+	
+.post h1 {
+	margin-bottom: 1em;
+	}
+	
+.post span {
+	color: #000 !important;
+	}
+	
+.a {
+	color: #5dc697 !important;
+	}
+	
+.load {
+	color: #000 !important;
+	}
+
+.home {
+	color: #000 !important;
+}
+
+.songlabel {
+	font-size: 0.7em;
+	z-index:110;
+	top:2.3em;
+	position:absolute;
+}
+
+div.controls {
+	top:4em;
+	z-index:100;
+	position:absolute;
+}
+
+#wrapper {
+	position:relative;
+	height:6.8em;
+}
+
+#foldermain {
+	padding-bottom:1em;
+}
+
+span {
+	display: block;
+	margin: 0.5em 0;
+	color: #000;
+	font-size: 0.8em;
+	font-weight: bold;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	}
+	
+p {
+	margin-bottom: 0.5em;
+	color: #333;
+	}
+	
+a:link, a:active, a:visited {
+	text-decoration: none;
+	color: #2281CF;
+	}
+
+a.folderlink {
+	font-size: 100%;
+}
+
+a.songlink {
+	font-size: 0.8em;
+}
+
+a:hover {
+	color: #ccc;
+}
+	
+hr {
+	clear: both;
+	border: 0;
+	}
+	
+cite {color: #000;}
+
+header {margin-bottom: 2em;}
+
+.logo {
+	font-weight: bold;
+	font-size: 2em;
+	color: #000;
+	padding-bottom:.5em;
+	}
+	
+/* ------ NAVIGATION ----- */
+
+nav {
+	float: left;
+	width: 25%;
+	margin-right: 10%;
+	}
+
+nav a {
+	color: #ccc;
+	}
+
+.categories {
+	margin-bottom: 3em;
+	}
+
+.categories li,
+.pages li,
+.end {
+	font-size: 0.8em;
+	font-weight: bold;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	margin: 0 0 .25em;
+	}
+	
+li a {-webkit-transition: color 0.25s ease-out;}
+li a:hover {-webkit-transition: color 0s ease-in;}
+	
+
+/* ------ COLORS ----- */
+
+.tldr {color: #5dc697 !important;}
+
+.tag-tldr:hover, .world_news:hover,
+article .world_news, .world+news {color: #5dc697;}
+
+.health:hover,.science:hover,
+article .health, article .science {color: #00bcf2;}
+
+.web:hover,.entertainment:hover,
+article .web, article .entertainment {color: #ae95e5;}
+
+.business:hover,.politics:hover,
+article .business, article .politics {color: #de3f34;}
+
+.sports:hover,.facts:hover,
+article .sports, article .facts {color: #ED4A89;}
+
+.tech:hover,.design:hover,
+article .tech, article .design {color: #f6ae32;}
+
+/* ------ MEDIA QUERIES ----- */
+
+@media screen and (max-width: 760px) {
+
+body {
+	font-size: 125%;
+	}
+
+}
+
+@media screen and (max-width: 638px) {
+
+body {
+	padding: 1em 1em;
+}
+
+section, nav, footer {
+	float: none;
+	width: auto;
+	max-width: 100%;
+	margin: 0 auto 1em;
+	}
+
+header {
+	margin-bottom: 1.5em;
+	}
+
+nav {
+	text-align: center;
+	}
+
+.categories li {
+	margin: 0 0 0.5em;
+	}
+
+footer {
+	text-align: center;
+	max-width: 80%;
+	padding: 0.5em 0;
+	margin: 0 auto 2em;
+	}
+
+.end {
+	color: #000 !important;
+	}
+
+}

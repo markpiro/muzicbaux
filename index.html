@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>muzicbaux</title>
+	<meta charset="us-ascii"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="https://dl.dropbox.com/u/2066680/muzicbaux/mb_favicon.png"/>
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+	<script type="text/javascript" src="js/libs/dropbox.js"></script>
+	<script type="text/javascript" src="js/muzicbaux.js"></script>
+	<script type="text/javascript" src="js/libs/oauth.js"></script>
+	<script type="text/javascript" src="js/libs/sha1.js"></script>
+	<link rel="stylesheet" href="css/muzicbaux.css" type="text/css" media="screen" />
+
+
+<body>
+
+<h1 class="logo">muzicbaux</h1>
+
+<div id="wrapper">
+	<div id="player"></div>
+	<div id="songtitle" class="songlabel"></div>
+
+	<div class="controls">
+		<a href="#" onclick="MBPlayer.previousSong(); return false;">prev</a> |
+		<a href="#" onclick="MBPlayer.playPause(); return false;">play/pause</a> |
+		<a href="#" onclick="MBPlayer.nextSong(); return false;">next</a>
+	</div>
+</div>
+	
+	<span><a href="#" id="Music/tracks/" class="home" onclick="MBUtils.createFolderLinks(this); return false;">folderlist</a></span>
+	<div id="foldermain"></div>
+
+	<span>songlist</span>
+
+	<div id="songmain"></div>
+	<div id="songs"></div><br><br><br>
+	
+	<button type="clear" onclick="MBUtils.clearStorage()">clear storage</button><br>
+	
+	<script type="text/javascript">	
+		window.onload = Dropbox.setup(function() {
+			if (Dropbox.accessToken) {
+				MBPlayer.createPlayer();
+				MBUtils.createFolderLinks('Music/tracks/');
+			};
+		});
+	</script>
+
+</body>
+</html>
