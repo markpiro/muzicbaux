@@ -1,7 +1,8 @@
 var next = 0;
-var folderList = [];
-var songList = [];
-var urlList = [];
+//var issorted = false;
+var folderList = new Array();
+var songList = new Array();
+var urlList = new Array();
 
 
 var MBUtils = {};
