@@ -146,10 +146,7 @@ var MBPlayer = {
 	},
 	setUrls: function() {
 		this.next = 0;
-		var urlList = MBUtils.sortObject(urlList);
-		//console.log('URLLIST: ' + urlList);
-		this.urls = urlList;
-		//console.log(urls.length);
+		this.urls = MBUtils.sortObject(MBUtils.urlList);
 	},
 	loadSong: function() {
 		//console.log("URLS: " + urls);
