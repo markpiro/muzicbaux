@@ -150,7 +150,7 @@ var MBPlayer = {
 	},
 	loadSong: function() {
 		//console.log("URLS: " + urls);
-		if (this.urls[next] != undefined) {
+		if (this.urls[this.next] != undefined) {
 			var audioPlayer = document.getElementsByTagName('audio')[0];
 			audioPlayer.src=urls[this.next];
 			audioPlayer.load();
