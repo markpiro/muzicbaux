@@ -43,7 +43,8 @@ Dropbox.authHTML5 = true;
 Dropbox.cache = true;
 
 //Set this to your authorization callback URL
-Dropbox.authCallback = "http://markpiro.github.com/muzicbaux/";
+//Dropbox.authCallback = "http://markpiro.github.com/muzicbaux/";
+Dropbox.authCallback = "http://bit.ly/10dVj8C";
 
 //Maximum number of files to list from a directory. Default 10k
 Dropbox.fileLimit = 10000;
