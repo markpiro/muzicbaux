@@ -171,7 +171,7 @@ var MBPlayer = {
 				this.next--;
 				MBPlayer.loadSong();
 				audioPlayer.play();
-			}.
+			}
 		} else {
 			this.next = this.urls.length-1;
 			//console.log('SONGLIST END');
