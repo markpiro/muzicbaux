@@ -133,7 +133,7 @@ var MBUtils = {
 
 var MBPlayer = {
 	next: 0,
-	urls: [];
+	urls: [],
 	createPlayer: function() {
 		//console.log('URLS: ' + urls);
 		//$('audio').remove();
