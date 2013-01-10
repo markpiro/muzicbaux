@@ -242,9 +242,9 @@ Dropbox.oauthReqeust = function(param1,param2,callback) {
 			callback(data, textStatus, jqXHR);
 		},
 		
-		error: function(a,b,c) {
+		error: function(xhr, status, error) {
 			//Something went wrong. Feel free to add a better error message if you want
-			console.log(b);
+			console.log(xhr.responseText);
 		}
 	});
 }
