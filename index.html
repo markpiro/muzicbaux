@@ -41,9 +41,7 @@
 	
 	<script type="text/javascript">	
 		window.onload = Dropbox.setup(function() {
-			console.log('load');
 			if (Dropbox.accessToken) {
-				console.log('create');
 				MBPlayer.createPlayer();
 				MBUtils.createFolderLinks('Music/tracks/');
 			};
