@@ -152,9 +152,9 @@ var MBPlayer = {
 		//console.log("URLS: " + urls);
 		if (this.urls[this.next] != undefined) {
 			var audioPlayer = document.getElementsByTagName('audio')[0];
-			audioPlayer.src=urls[this.next];
+			audioPlayer.src=this.urls[this.next];
 			audioPlayer.load();
-			var b = unescape(urls[this.next]);
+			var b = unescape(this.urls[this.next]);
 			var c = b.split("/");
 			var d = c[c.length-1];
 			$('#songtitle').html(d);
