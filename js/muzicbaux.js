@@ -19,10 +19,10 @@ var MBUtils = {
 			}
 		}
 		if (MBUtils.folderList.length > 0) {
-			MBUtils.getFolderLinks(folderList);
+			MBUtils.getFolderLinks(MBUtils.folderList);
 		}
 		if (MBUtils.songList.length > 0) {
-			MBUtils.getSongLinks(songList);
+			MBUtils.getSongLinks(MBUtils.songList);
 		}
 	},
 	createFolderLinks: function(x) {
