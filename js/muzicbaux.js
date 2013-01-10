@@ -1,4 +1,3 @@
-
 var MBUtils = {
 	folderList: [],
 	songList: [],
