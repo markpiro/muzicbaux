@@ -150,7 +150,7 @@ var MBPlayer = {
 		//console.log('URLLIST: ' + urlList);
 		this.urls = urlList;
 		//console.log(urls.length);
-	}
+	},
 	loadSong: function() {
 		//console.log("URLS: " + urls);
 		if (this.urls[next] != undefined) {
@@ -163,7 +163,7 @@ var MBPlayer = {
 			$('#songtitle').html(d);
 			//console.log(d);
 		}
-	}
+	},
 	previousSong: function() {
 		var audioPlayer = document.getElementsByTagName('audio')[0];
 		if (this.next > 0) {
