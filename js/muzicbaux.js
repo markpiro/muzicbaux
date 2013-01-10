@@ -4,25 +4,27 @@ var MBUtils = {
 	songList: [],
 	urlList: [],
 	getLists: function(data) {
-		this.folderList = [];
-		this.songList = [];
+		//var folderList = MBUtils.folderList;
+		//var songList = MBUtils.songList;
+		var folderList = [];
+		var songList = [];
 		data = data.contents;
 		var len = data.length;
 		for (var i=0;i<len;i++) {
 			//console.log(data[i].path);
 			if (data[i].is_dir == true) {
 				var folderItem = data[i].path;
-				this.folderList.push(folderItem);
+				folderList.push(folderItem);
 			} else {
 				var songItem = data[i].path;
-				this.songList.push(songItem);
+				songList.push(songItem);
 			}
 		}
-		if (this.folderList.length > 0) {
-			MBUtils.getFolderLinks(this.folderList);
+		if (folderList.length > 0) {
+			MBUtils.getFolderLinks(folderList);
 		}
-		if (this.songList.length > 0) {
-			MBUtils.getSongLinks(this.songList);
+		if (songList.length > 0) {
+			MBUtils.getSongLinks(songList);
 		}
 	},
 	createFolderLinks: function(x) {
@@ -83,20 +85,20 @@ var MBUtils = {
 			$("#songs").append(link);
 			$(link).wrap('<p></p>');
 		};
-		this.urlList = [];
+		MBUtils.urlList = [];
 		//console.log('SONGLIST: ' + songList);
-		for (i=0; i<this.songList.length; i++) {
-			Dropbox.getMedia(i, this.songList[i], function(index, data) {
+		for (i=0; i<MBUtils.songList.length; i++) {
+			Dropbox.getMedia(i, MBUtils.songList[i], function(index, data) {
 				for (var key in data){
 					if (data.hasOwnProperty(key)){
 						//console.log(key + ": " + data[key]);
 						if (key == 'url'){
 							//console.log('storing url');
-							this.urlList.push({key:index, value:data[key]});
+							MBUtils.urlList.push({key:index, value:data[key]});
 						}
 					}
 				}
-				if (this.urlList.length == this.songList.length) {
+				if (MBUtils.urlList.length == MBUtils.songList.length) {
 					//console.log('URLLIST: ' + urlList);
 					//console.log('initplayer');
 					MBPlayer.setUrls();
@@ -145,16 +147,17 @@ var MBPlayer = {
 		document.getElementById("player").appendChild(audioPlayer);
 	},
 	setUrls: function() {
-		this.next = 0;
-		this.urls = MBUtils.sortObject(MBUtils.urlList);
+		MBPlayer.next = 0;
+		MBPlayer.urls = MBUtils.sortObject(MBUtils.urlList);
 	},
 	loadSong: function() {
+		var urls = MBPlayer.urls;
 		//console.log("URLS: " + urls);
-		if (this.urls[this.next] != undefined) {
+		if (urls[MBPlayer.next] != undefined) {
 			var audioPlayer = document.getElementsByTagName('audio')[0];
-			audioPlayer.src=this.urls[this.next];
+			audioPlayer.src=urls[MBPlayer.next];
 			audioPlayer.load();
-			var b = unescape(this.urls[this.next]);
+			var b = unescape(urls[MBPlayer.next]);
 			var c = b.split("/");
 			var d = c[c.length-1];
 			$('#songtitle').html(d);
@@ -163,14 +166,14 @@ var MBPlayer = {
 	},
 	previousSong: function() {
 		var audioPlayer = document.getElementsByTagName('audio')[0];
-		if (this.next > 0) {
+		if (MBPlayer.next > 0) {
 			if(audioPlayer!=undefined) {
-				this.next--;
+				MBPlayer.next--;
 				MBPlayer.loadSong();
 				audioPlayer.play();
 			}
 		} else {
-			this.next = this.urls.length-1;
+			MBPlayer.next = MBPlayer.urls.length-1;
 			//console.log('SONGLIST END');
 			MBPlayer.loadSong();
 			audioPlayer.play();
@@ -178,16 +181,16 @@ var MBPlayer = {
 	},
 	nextSong: function() {
 		var audioPlayer = document.getElementsByTagName('audio')[0];
-		if (this.next < this.urls.length) {
+		if (MBPlayer.next < MBPlayer.urls.length) {
 			if(audioPlayer != undefined) {
-				this.next++;
+				MBPlayer.next++;
 				//console.log(next);
 				MBPlayer.loadSong();
 				audioPlayer.play();
 			}
 		}
-		if (this.next == this.urls.length) {
-			this.next = 0;
+		if (MBPlayer.next == MBPlayer.urls.length) {
+			MBPlayer.next = 0;
 			//console.log(next);
 			//console.log('SONGLIST START');
 			MBPlayer.loadSong();
@@ -209,9 +212,9 @@ var MBPlayer = {
 		}
 	},
 	pickSong: function(num) {
-		for (i=0;i<songList.length;i++) {
-			if (songList[i] == num.id) {
-				this.next = i;
+		for (i=0;i<MBPlayer.songList.length;i++) {
+			if (MBPlayer.songList[i] == num.id) {
+				MBPlayer.next = i;
 			}
 		}
 		//next = num;
