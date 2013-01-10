@@ -12,17 +12,17 @@ var MBUtils = {
 			//console.log(data[i].path);
 			if (data[i].is_dir == true) {
 				var folderItem = data[i].path;
-				folderList.push(folderItem);
+				this.folderList.push(folderItem);
 			} else {
 				var songItem = data[i].path;
-				songList.push(songItem);
+				this.songList.push(songItem);
 			}
 		}
-		if (folderList.length > 0) {
-			MBUtils.getFolderLinks(folderList);
+		if (this.folderList.length > 0) {
+			MBUtils.getFolderLinks(this.folderList);
 		}
-		if (songList.length > 0) {
-			MBUtils.getSongLinks(songList);
+		if (this.songList.length > 0) {
+			MBUtils.getSongLinks(this.songList);
 		}
 	},
 	createFolderLinks: function(x) {
