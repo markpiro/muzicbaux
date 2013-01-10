@@ -4,8 +4,8 @@ var MBUtils = {
 	songList: [],
 	urlList: [],
 	getLists: function(data) {
-		folderList = [];
-		songList = [];
+		this.folderList = [];
+		this.songList = [];
 		data = data.contents;
 		var len = data.length;
 		for (var i=0;i<len;i++) {
@@ -83,20 +83,20 @@ var MBUtils = {
 			$("#songs").append(link);
 			$(link).wrap('<p></p>');
 		};
-		urlList = [];
+		this.urlList = [];
 		//console.log('SONGLIST: ' + songList);
-		for (i=0; i<songList.length; i++) {
-			Dropbox.getMedia(i, songList[i], function(index, data) {
+		for (i=0; i<this.songList.length; i++) {
+			Dropbox.getMedia(i, this.songList[i], function(index, data) {
 				for (var key in data){
 					if (data.hasOwnProperty(key)){
 						//console.log(key + ": " + data[key]);
 						if (key == 'url'){
 							//console.log('storing url');
-							urlList.push({key:index, value:data[key]});
+							this.urlList.push({key:index, value:data[key]});
 						}
 					}
 				}
-				if (urlList.length == songList.length) {
+				if (this.urlList.length == this.songList.length) {
 					//console.log('URLLIST: ' + urlList);
 					//console.log('initplayer');
 					MBPlayer.setUrls();
