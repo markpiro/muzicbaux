@@ -43,8 +43,7 @@ Dropbox.authHTML5 = true;
 Dropbox.cache = true;
 
 //Set this to your authorization callback URL
-//Dropbox.authCallback = "http://markpiro.github.com/muzicbaux/";
-Dropbox.authCallback = "http://bit.ly/10dVj8C";
+Dropbox.authCallback = "http://bit.ly/Q76hXY";
 
 //Maximum number of files to list from a directory. Default 10k
 Dropbox.fileLimit = 10000;
@@ -115,65 +114,61 @@ if (Dropbox.authHTML5 == true) {
 Dropbox.setup = function(callback) {
 	//Check if access already allowed
 	console.log('setup');
-	if (!Dropbox.accessToken || !Dropbox.accessTokenSecret) {
-		console.log('accesstoken');
-		//Check if already authorized, but not given access yet
-		if (!Dropbox.requestToken || !Dropbox.requestTokenSecret) {
-			console.log('requesttoken');
-			//Request request token
-			Dropbox.oauthReqeust({
+	if (!Dropbox.requestToken && !Dropbox.accessToken) {
+		console.log('requesttoken');
+		//Request request token
+		Dropbox.oauthReqeust(
+			{
 				url: "https://api.dropbox.com/1/oauth/request_token",
 				type: "jsonp",
 				method: "GET",
 				token: true,
 				tokenSecret: true
-			}, [], function(data) {
+			},
+			[],
+			function(data) {
 				data = data.split("&");
 				dataArray = new Array();
-				
 				//Parse token
 				for (i in data) {
 					dataTemp =  data[i].split("=");
 					dataArray[dataTemp[0]] = dataTemp[1];
 				}
-				
-				//Store token
 				Dropbox.storeData("requestToken",dataArray['oauth_token']);
 				Dropbox.storeData("requestTokenSecret",dataArray['oauth_token_secret']);
-				
 				//Redirect to autorization page
 				document.location = "https://www.dropbox.com/1/oauth/authorize?oauth_token=" + dataArray["oauth_token"] + "&oauth_callback=" + Dropbox.authCallback;
-			});
-		} else {
-			console.log('oauth');
-			//Request access token
-			Dropbox.oauthReqeust({
+			});	
+	} else if (!Dropbox.accessToken || !Dropbox.accessTokenSecret) {
+		console.log('accesstoken');
+		//Request access token
+		Dropbox.oauthReqeust(
+			{
 				url: "https://api.dropbox.com/1/oauth/access_token",
 				type: "jsonp",
 				method: "GET",
 				token: Dropbox.requestToken,
 				tokenSecret: Dropbox.requestTokenSecret
-			}, [], function(data) {
+			},
+			[],
+			function(data) {
 				data = data.split("&");
 				dataArray = new Array();
-				
 				//Parse token
 				for (i in data) {
 					dataTemp =  data[i].split("=");
 					dataArray[dataTemp[0]] = dataTemp[1];
 				}
-				
 				//Store token
 				Dropbox.storeData("accessToken",dataArray['oauth_token']);
 				Dropbox.storeData("accessTokenSecret",dataArray['oauth_token_secret']);
-				
 				//Update variables with tokens
 				Dropbox.accessToken = dataArray['oauth_token'];
 				Dropbox.accessTokenSecret = dataArray['oauth_token_secret'];
-				
+				localStorage.removeItem('muzicbauxrequestToken');
+				localStorage.removeItem('muzicbauxrequestTokenSecret');
 				callback();
 			});
-		}
 	}
 	callback();
 };

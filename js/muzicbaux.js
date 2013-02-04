@@ -1,28 +1,27 @@
-//add description .
+
 var MBUtils = {
 	folderList: [],
 	songList: [],
 	urlList: [],
 	getLists: function(data) {
-		MBUtils.folderList = [];
-		MBUtils.songList = [];
+		this.folderList = [];
+		this.songList = [];
 		data = data.contents;
 		var len = data.length;
 		for (var i=0;i<len;i++) {
-			//console.log(data[i].path);
 			if (data[i].is_dir == true) {
 				var folderItem = data[i].path;
-				MBUtils.folderList.push(folderItem);
+				this.folderList.push(folderItem);
 			} else {
 				var songItem = data[i].path;
-				MBUtils.songList.push(songItem);
+				this.songList.push(songItem);
 			}
 		}
-		if (MBUtils.folderList.length > 0) {
-			MBUtils.getFolderLinks(MBUtils.folderList);
+		if (this.folderList.length > 0) {
+			this.getFolderLinks(this.folderList);
 		}
-		if (MBUtils.songList.length > 0) {
-			MBUtils.getSongLinks(MBUtils.songList);
+		if (this.songList.length > 0) {
+			this.getSongLinks(this.songList);
 		}
 	},
 	createFolderLinks: function(x) {
@@ -39,42 +38,38 @@ var MBUtils = {
 		return false;
 	},
 	getFolderLinks: function(links) {
-		//console.log(urllist);
 		$('#foldermain').append("<div id=\'folders\'</div>");
 		for (i=0; i<links.length; i++) {
 			var link = document.createElement('a');
-			link.href = '#';
 			var b = unescape(links[i]);
 			var c = b.split("/");
 			var d = c[c.length-1];
+			link.href = '#';
 			link.innerHTML = d;
 			link.onclick = function() {MBUtils.createFolderLinks(this); MBUtils.updateCurrentFolder(this);};
 			link.id = links[i];
 			link.className = 'folderlink';
-			//var div = document.getElementById('folders');
-			//div.appendChild(link);
 			$("#folders").append(link);
 			$(link).wrap('<p></p>');
 		}
 	},
 	createSongLinks: function(x) {
+		var link = x.id;
 		$('div[id=songs]').remove();
 		$('div[id=folders]').remove();
-		var link = x.id;
 		Dropbox.getFolder(link, function(data) {
 			MBUtils.getLists(data);
 		});
 		return false;
 	},
 	getSongLinks: function(links) {
-		//console.log(urllist);
 		$('#songmain').append("<div id=\'songs\'</div>");
 		for (i=0; i<links.length; i++) {
 			var link = document.createElement('a');
-			link.href = '#';
 			var b = unescape(links[i]);
 			var c = b.split("/");
 			var d = c[c.length-1];
+			link.href = '#';
 			link.innerHTML = d;
 			//link.onclick = function() {MBUtils.createSongLinks(this);};
 			link.onclick = function() {MBPlayer.pickSong(this); return false;};
@@ -82,23 +77,18 @@ var MBUtils = {
 			link.className = 'songlink';
 			$("#songs").append(link);
 			$(link).wrap('<p></p>');
-		};
-		MBUtils.urlList = [];
-		//console.log('SONGLIST: ' + songList);
-		for (i=0; i<MBUtils.songList.length; i++) {
+		}
+		this.urlList = [];
+		for (i=0; i<this.songList.length; i++) {
 			Dropbox.getMedia(i, MBUtils.songList[i], function(index, data) {
 				for (var key in data){
 					if (data.hasOwnProperty(key)){
-						//console.log(key + ": " + data[key]);
 						if (key == 'url'){
-							//console.log('storing url');
 							MBUtils.urlList.push({key:index, value:data[key]});
 						}
 					}
 				}
 				if (MBUtils.urlList.length == MBUtils.songList.length) {
-					//console.log('URLLIST: ' + urlList);
-					//console.log('initplayer');
 					MBPlayer.setUrls();
 					MBPlayer.loadSong();
 				}
@@ -107,7 +97,7 @@ var MBUtils = {
 	},
 	clearStorage: function() {
 		//localStorage.removeItem('muzicbauxcache.Music/tracks/');
-		console.log('deleting cache');
+		console.log('deleting storage');
 		localStorage.clear();
 	},
 	updateCurrentFolder: function(x) {
@@ -115,15 +105,19 @@ var MBUtils = {
 	},
 	sortObject: function(o) {
 		var result = {};
-		for (var i=0; i<o.length; i++) {
-		    result[o[i].key] = o[i].value;
-		}
-		keys = Object.keys(result),
-		i, len = keys.length;
-		keys.sort();
+		var keys = [];
 		var sorted = [];
-		for (i=0; i<len; i++) {
-			k = keys[i];
+		for (var i=0; i<o.length; i++) {
+			result[o[i].key] = o[i].value;
+		}
+		for (key in o) {
+			if (o.hasOwnProperty(key)) {
+				keys.push(parseInt(key));
+			}
+		}
+		keys.sort(function(a,b){return a-b});
+		for (var i=0; i<keys.length; i++) {
+			var k = keys[i];
 			sorted.push(result[k]);
 		}
 		return sorted;
@@ -134,92 +128,79 @@ var MBUtils = {
 var MBPlayer = {
 	next: 0,
 	urls: [],
+	audioPlayer: new Audio(),
 	createPlayer: function() {
-		//console.log('URLS: ' + urls);
-		//$('audio').remove();
-		var audioPlayer = new Audio();
-		audioPlayer.autoplay = false;
-		audioPlayer.controls="controls";
-		audioPlayer.addEventListener('ended', MBPlayer.nextSong, false);
-		audioPlayer.addEventListener('error', MBPlayer.errorFallback, true);
-		document.getElementById("player").appendChild(audioPlayer);
+		this.audioPlayer.autoplay = false;
+		this.audioPlayer.controls="controls";
+		this.audioPlayer.addEventListener('ended', this.nextSong, false);
+		this.audioPlayer.addEventListener('error', this.errorFallback, true);
+		document.getElementById("player").appendChild(this.audioPlayer);
 	},
 	setUrls: function() {
-		MBPlayer.next = 0;
-		MBPlayer.urls = MBUtils.sortObject(MBUtils.urlList);
+		this.next = 0;
+		console.log('setting urls');
+		this.urls = MBUtils.sortObject(MBUtils.urlList);
 	},
 	loadSong: function() {
-		//console.log("URLS: " + urls);
-		if (MBPlayer.urls[MBPlayer.next] != undefined) {
-			var audioPlayer = document.getElementsByTagName('audio')[0];
-			audioPlayer.src=MBPlayer.urls[MBPlayer.next];
-			audioPlayer.load();
-			var b = unescape(MBPlayer.urls[MBPlayer.next]);
+		if (this.urls[this.next]) {
+			this.audioPlayer.src=this.urls[this.next];
+			this.audioPlayer.load();
+			var b = unescape(this.urls[this.next]);
 			var c = b.split("/");
 			var d = c[c.length-1];
 			$('#songtitle').html(d);
-			//console.log(d);
 		}
 	},
 	previousSong: function() {
-		var audioPlayer = document.getElementsByTagName('audio')[0];
-		if (MBPlayer.next > 0) {
-			if(audioPlayer!=undefined) {
-				MBPlayer.next--;
-				MBPlayer.loadSong();
-				audioPlayer.play();
+		if (this.next > 0) {
+			if(this.audioPlayer) {
+				this.next--;
+				this.loadSong();
+				this.audioPlayer.play();
 			}
 		} else {
-			MBPlayer.next = MBPlayer.urls.length-1;
-			//console.log('SONGLIST END');
-			MBPlayer.loadSong();
-			audioPlayer.play();
+			this.next = this.urls.length-1;
+			this.loadSong();
+			this.audioPlayer.play();
 		}
 	},
 	nextSong: function() {
-		var audioPlayer = document.getElementsByTagName('audio')[0];
 		if (MBPlayer.next < MBPlayer.urls.length) {
-			if(audioPlayer != undefined) {
+			if(MBPlayer.audioPlayer) {
 				MBPlayer.next++;
-				//console.log(next);
 				MBPlayer.loadSong();
-				audioPlayer.play();
+				MBPlayer.audioPlayer.play();
 			}
 		}
 		if (MBPlayer.next == MBPlayer.urls.length) {
 			MBPlayer.next = 0;
-			//console.log(next);
-			//console.log('SONGLIST START');
 			MBPlayer.loadSong();
-			audioPlayer.play();
+			MBPlayer.audioPlayer.play();
 		}
 	},
 	errorFallback: function() {
-		MBPlayer.nextSong();
+		//this.nextSong();
+		console.log('unknown error');
 	},
 	playPause: function() {
-		//console.log("position: " + next);
-		var audioPlayer = document.getElementsByTagName('audio')[0];
-		if(audioPlayer!=undefined) {
-			if (audioPlayer.paused) {
-				audioPlayer.play();
+		if(this.audioPlayer) {
+			if (this.audioPlayer.paused) {
+				this.audioPlayer.play();
 			} else {
-				audioPlayer.pause();
+				this.audioPlayer.pause();
 			}
 		}
 	},
 	pickSong: function(num) {
+		//console.log(num, this.urls);
 		for (i=0;i<MBUtils.songList.length;i++) {
 			if (MBUtils.songList[i] == num.id) {
-				MBPlayer.next = i;
+				this.next = i;
 			}
 		}
-		//next = num;
-		var audioPlayer = document.getElementsByTagName('audio')[0];
-		if (audioPlayer != undefined) {
-			//audioPlayer.src = urls[next];
-			MBPlayer.loadSong();
-			audioPlayer.play();
+		if (this.audioPlayer) {
+			this.loadSong();
+			this.audioPlayer.play();
 		}
 	}
 }
