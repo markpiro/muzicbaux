@@ -2,7 +2,6 @@
 var MBUtils = {
 	folderList: [],
 	songList: [],
-	urlList: [],
 	getLists: function(data) {
 		this.folderList = [];
 		this.songList = [];
@@ -72,26 +71,36 @@ var MBUtils = {
 			link.href = '#';
 			link.innerHTML = d;
 			//link.onclick = function() {MBUtils.createSongLinks(this);};
-			link.onclick = function() {MBPlayer.pickSong(this); return false;};
-			link.id = links[i];
+			link.onclick = function() {MBUtils.getSongUrl(this); return false;};
+			link.id = i;
+			link.path = links[i];
 			link.className = 'songlink';
 			$("#songs").append(link);
 			$(link).wrap('<p></p>');
 		}
-		this.urlList = [];
-		for (i=0; i<this.songList.length; i++) {
-			Dropbox.getMedia(i, MBUtils.songList[i], function(index, data) {
-				for (var key in data){
-					if (data.hasOwnProperty(key)){
-						if (key == 'url'){
-							MBUtils.urlList.push({key:index, value:data[key]});
-						}
-					}
-				}
-				if (MBUtils.urlList.length == MBUtils.songList.length) {
-					MBPlayer.setUrls();
-					MBPlayer.loadSong();
-				}
+	},
+	/*getSongUrl: function(song) {
+		Dropbox.getMedia(song.path, function(data) {
+			MBPlayer.pickSong(song, data.url);
+		});
+	},*/
+	getSongUrl: function(song) {
+		var cache = Dropbox.getData("cache." + song.path);
+		var expire = Dropbox.getData("expires." + song.path);
+		var e = new Date(expire).getTime();
+		var now = new Date().getTime();
+		if (cache != 'null' && now <= e-600000) {
+			var url = cache;
+			console.log('using cache');
+			MBPlayer.pickSong(song, url);
+		} else {
+			Dropbox.getMedia(song.path, function(data) {
+				console.log('caching song');
+				var url = data.url;
+				var expire = data.expires;
+				Dropbox.storeData("cache." + song.path, url);
+				Dropbox.storeData("expires." + song.path, expire);
+				MBPlayer.pickSong(song, url);
 			});
 		}
 	},
@@ -102,28 +111,8 @@ var MBUtils = {
 	},
 	updateCurrentFolder: function(x) {
 		$("a.load").attr('id', x.id);
-	},
-	sortObject: function(o) {
-		var result = {};
-		var keys = [];
-		var sorted = [];
-		for (var i=0; i<o.length; i++) {
-			result[o[i].key] = o[i].value;
-		}
-		for (key in o) {
-			if (o.hasOwnProperty(key)) {
-				keys.push(parseInt(key));
-			}
-		}
-		keys.sort(function(a,b){return a-b});
-		for (var i=0; i<keys.length; i++) {
-			var k = keys[i];
-			sorted.push(result[k]);
-		}
-		return sorted;
 	}
 }
-
 
 var MBPlayer = {
 	next: 0,
@@ -141,41 +130,35 @@ var MBPlayer = {
 		console.log('setting urls');
 		this.urls = MBUtils.sortObject(MBUtils.urlList);
 	},
-	loadSong: function() {
-		if (this.urls[this.next]) {
-			this.audioPlayer.src=this.urls[this.next];
-			this.audioPlayer.load();
-			var b = unescape(this.urls[this.next]);
-			var c = b.split("/");
-			var d = c[c.length-1];
-			$('#songtitle').html(d);
-		}
+	loadSong: function(url) {
+		this.audioPlayer.src = url;
+		this.audioPlayer.load();
+		var b = unescape(url);
+		var c = b.split("/");
+		var d = c[c.length-1];
+		$('#songtitle').html(d);
 	},
 	previousSong: function() {
+		var len = $('.songlink').length;
 		if (this.next > 0) {
-			if(this.audioPlayer) {
-				this.next--;
-				this.loadSong();
-				this.audioPlayer.play();
-			}
+			this.next--;
 		} else {
-			this.next = this.urls.length-1;
-			this.loadSong();
-			this.audioPlayer.play();
+			this.next = len-1;
+		}
+		if (this.audioPlayer) {
+			var song = $('#'+(this.next)+'.songlink')[0];
+			MBUtils.getSongUrl(song);
 		}
 	},
 	nextSong: function() {
-		if (MBPlayer.next < MBPlayer.urls.length) {
-			if(MBPlayer.audioPlayer) {
-				MBPlayer.next++;
-				MBPlayer.loadSong();
-				MBPlayer.audioPlayer.play();
-			}
+		this.next++;
+		var len = $('.songlink').length;
+		if (this.next == len) {
+			this.next = 0;
 		}
-		if (MBPlayer.next == MBPlayer.urls.length) {
-			MBPlayer.next = 0;
-			MBPlayer.loadSong();
-			MBPlayer.audioPlayer.play();
+		if (this.audioPlayer) {
+			var song = $('#'+(this.next)+'.songlink')[0];
+			MBUtils.getSongUrl(song);
 		}
 	},
 	errorFallback: function() {
@@ -191,15 +174,10 @@ var MBPlayer = {
 			}
 		}
 	},
-	pickSong: function(num) {
-		//console.log(num, this.urls);
-		for (i=0;i<MBUtils.songList.length;i++) {
-			if (MBUtils.songList[i] == num.id) {
-				this.next = i;
-			}
-		}
+	pickSong: function(song, url) {
+		this.next = song.id;
 		if (this.audioPlayer) {
-			this.loadSong();
+			this.loadSong(url);
 			this.audioPlayer.play();
 		}
 	}

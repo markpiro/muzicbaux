@@ -349,7 +349,6 @@ Dropbox.getFolder = function(path,callback) {
 				data = jQuery.parseJSON(data);
 			} else {
 				console.log('storing hash');
-				//console.log(folderContents);
 				localStorage.removeItem(Dropbox.prefix + "cache." + path);
 
 				//Contents have changed - cache them for later
@@ -446,13 +445,14 @@ Dropbox.uploadFile = function(path,file) {
 	});
 }
 
-Dropbox.getMedia = function(index, path, callback) {
+Dropbox.getMedia = function(path, callback) {
 	//urlList = [];
 	Dropbox.oauthReqeust({
 		url: "https://api.dropbox.com/1/media/" + Dropbox.accessType + "/" + path,
 		type: "jsonp",
 		method: "GET"
 	}, [], function(data) {
-		callback(index, data);
+		callback(data);
 	});
 }
+

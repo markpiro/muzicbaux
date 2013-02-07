@@ -1,233 +1,258 @@
-/* ------ Copyright (c) CJ Melegrito - mlgrto.com ----- */
-/*[22-11-12]*/
- 
- html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
-	 border: 0;
-	 font-size: 100%;
-	 font: inherit;
-	 vertical-align: baseline;
-	 outline: 0;
-	 list-style: none;
-	 margin: 0;
-	 padding: 0;
-	 }
-	 
-/* ------ LAYOUT & TYPOGRAPHY ----- */
- 
 body {
-	font-size: 137.5%;
-	font-family: avenir, avenir-web;
-	background: #fff;
-	color: #333;
-	max-width: 720px;
-	margin: 0 auto;
-	padding: 1em;
-	}
-	
-section,footer {
-	width: 65%;
-	float: right;
-	}
-	
-article {
-	margin-bottom: 2em;
-	}
-	
-h1 {
-	font-weight: 500;
-	color: #000;
-	}
-	
-h1 span {
-	display: inline;
-	}
-	
-.post h1 {
-	margin-bottom: 1em;
-	}
-	
-.post span {
-	color: #000 !important;
-	}
-	
-.a {
-	color: #5dc697 !important;
-	}
-	
-.load {
-	color: #000 !important;
-	}
-
-.home {
-	color: #000 !important;
+  margin: 0;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  line-height: 20px;
+  color: #333333;
+  background-color: #ffffff;
+  padding-top: 40px;
+  padding-right: 20px;
+  padding-left: 20px;
 }
-
-.songlabel {
-	font-size: 0.7em;
-	z-index:110;
-	top:2.3em;
-	position:absolute;
+a {
+  color: #0088cc;
+  text-decoration: none;
 }
-
-div.controls {
-	top:4em;
-	z-index:100;
-	position:absolute;
-}
-
-#wrapper {
-	position:relative;
-	height:6.8em;
-}
-
-#foldermain {
-	padding-bottom:1em;
-}
-
-span {
-	display: block;
-	margin: 0.5em 0;
-	color: #000;
-	font-size: 0.8em;
-	font-weight: bold;
-	text-transform: uppercase;
-	letter-spacing: 1px;
-	}
-	
-p {
-	margin-bottom: 0.5em;
-	color: #333;
-	}
-	
-a:link, a:active, a:visited {
-	text-decoration: none;
-	color: #2281CF;
-	}
-
-a.folderlink {
-	font-size: 100%;
-}
-
-a.songlink {
-	font-size: 0.8em;
-}
-
 a:hover {
-	color: #ccc;
+  color: #005580;
+  text-decoration: none;
 }
-	
-hr {
-	clear: both;
-	border: 0;
-	}
-	
-cite {color: #000;}
-
-header {margin-bottom: 2em;}
-
-.logo {
-	font-weight: bold;
-	font-size: 2em;
-	color: #000;
-	padding-bottom:.5em;
-	}
-	
-/* ------ NAVIGATION ----- */
-
-nav {
+.container {
+  margin-right: auto;
+  margin-left: auto;
+  *zoom: 1;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 10px 0;
+  font-family: inherit;
+  font-weight: bold;
+  line-height: 20px;
+  color: inherit;
+  text-rendering: optimizelegibility;
+}
+h1 small,
+h2 small,
+h3 small,
+h4 small,
+h5 small,
+h6 small {
+  font-weight: normal;
+  line-height: 1;
+  color: #999999;
+}
+h1,
+h2,
+h3 {
+  line-height: 40px;
+}
+h1 {
+  font-size: 38.5px;
+}
+h2 {
+  font-size: 31.5px;
+}
+h3 {
+  font-size: 24.5px;
+}
+h4 {
+  font-size: 17.5px;
+}
+h5 {
+  font-size: 14px;
+}
+h6 {
+  font-size: 11.9px;
+}
+h1 small {
+  font-size: 24.5px;
+}
+h2 small {
+  font-size: 17.5px;
+}
+h3 small {
+  font-size: 14px;
+}
+h4 small {
+  font-size: 14px;
+}
+ul,
+ol {
+  padding: 0;
+  margin: 0 0 10px 25px;
+}
+ul ul,
+ul ol,
+ol ol,
+ol ul {
+  margin-bottom: 0;
+}
+li {
+  line-height: 20px;
+}
+.navbar {
+  overflow: visible;
+  margin-bottom: 20px;
+  *position: relative;
+  *z-index: 2;
+}
+.navbar .nav {
+  position: relative;
+  left: 0;
+  display: block;
+  float: left;
+  margin: 0 10px 0 0;
+}
+.navbar .container {
+  width: auto;
+  padding: 0;
+}
+.navbar-fixed-top,
+.navbar-fixed-bottom {
+  position: fixed;
+  right: 0;
+  left: 0;
+  z-index: 1030;
+  margin-bottom: 0;
+}
+.navbar-fixed-top {
+  margin-bottom: 20px;
+}
+.navbar-fixed-bottom {
+  margin-top: 20px;
+}
+.navbar-fixed-top .navbar-inner {
+	padding-left: 0;
+	padding-right: 0;
+	-webkit-border-radius: 0;
+	-moz-border-radius: 0;
+	border-radius: 0;
+	height: 42px;
+}
+.navbar-fixed-bottom .navbar-inner {
+  padding-left: 0;
+  padding-right: 0;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+  height: 32px;
+}
+.navbar-static-top .container,
+.navbar-fixed-top .container,
+.navbar-fixed-bottom .container {
+  width: 940px;
+}
+.navbar-fixed-top {
+  top: 0;
+}
+.navbar-fixed-top .navbar-inner,
+.navbar-static-top .navbar-inner {
+  -webkit-box-shadow: 0 1px 10px rgba(0,0,0,.1);
+  -moz-box-shadow: 0 1px 10px rgba(0,0,0,.1);
+  box-shadow: 0 1px 10px rgba(0,0,0,.1);
+}
+.navbar-fixed-bottom {
+  bottom: 0;
+}
+.navbar-fixed-bottom .navbar-inner {
+  -webkit-box-shadow: 0 -1px 10px rgba(0,0,0,.1);
+  -moz-box-shadow: 0 -1px 10px rgba(0,0,0,.1);
+  box-shadow: 0 -1px 10px rgba(0,0,0,.1);
+}
+.navbar-inverse .navbar-inner {
+  background-color: #1b1b1b;
+  background-image: -moz-linear-gradient(top, #222222, #111111);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#222222), to(#111111));
+  background-image: -webkit-linear-gradient(top, #222222, #111111);
+  background-image: -o-linear-gradient(top, #222222, #111111);
+  background-image: linear-gradient(to bottom, #222222, #111111);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff222222', endColorstr='#ff111111', GradientType=0);
+  border-color: #252525;
+}
+.onecol, .twocol, .threecol, .fourcol, .fivecol, .sixcol, .sevencol, .eightcol, .ninecol, .tencol, .elevencol {
+	margin-right: 3.8%;
 	float: left;
-	width: 25%;
-	margin-right: 10%;
-	}
-
-nav a {
-	color: #ccc;
-	}
-
-.categories {
-	margin-bottom: 3em;
-	}
-
-.categories li,
-.pages li,
-.end {
-	font-size: 0.8em;
+	min-height: 1px;
+}
+.row {
+	width: 100%;
+	max-width: 1140px;
+	margin: 0 auto;
+	overflow: hidden;
+	font-size:18px;
+}
+.row .threecol {
+	/*width: 22.05%;*/
+	width: 25;
+	padding-top: 4px;
+}
+.row .fourcol { 
+	width: 30.75%;
+}
+.row .sixcol {
+	width: 48%;
+}
+.row .twelvecol {
+	width: 100%;
+	float: left;
+}
+.last {
+	margin-right: 0px;
+}
+.nav-bottom {
+	width: 100%;
+	padding:6px 20px 6px 0px;
+	font-weight:bold;
+}
+a.ctrl {
+	color: white;	
+}
+a.ctrl:hover {
+  color: gray;
+  text-decoration: none;
+}
+.nav-top {
+	width:100%;
+	padding:6px 20px 6px 20px;
 	font-weight: bold;
-	text-transform: uppercase;
-	letter-spacing: 1px;
-	margin: 0 0 .25em;
-	}
-	
-li a {-webkit-transition: color 0.25s ease-out;}
-li a:hover {-webkit-transition: color 0s ease-in;}
-	
-
-/* ------ COLORS ----- */
-
-.tldr {color: #5dc697 !important;}
-
-.tag-tldr:hover, .world_news:hover,
-article .world_news, .world+news {color: #5dc697;}
-
-.health:hover,.science:hover,
-article .health, article .science {color: #00bcf2;}
-
-.web:hover,.entertainment:hover,
-article .web, article .entertainment {color: #ae95e5;}
-
-.business:hover,.politics:hover,
-article .business, article .politics {color: #de3f34;}
-
-.sports:hover,.facts:hover,
-article .sports, article .facts {color: #ED4A89;}
-
-.tech:hover,.design:hover,
-article .tech, article .design {color: #f6ae32;}
-
-/* ------ MEDIA QUERIES ----- */
-
-@media screen and (max-width: 760px) {
-
-body {
-	font-size: 125%;
-	}
-
+}
+audio {
+	width: 180px;
+	display: block;
+	height:30px;
+}
+a.songlink {
+	font-size:14px;
+	color: #1f8ce6;
+}
+a.folderlink {
+	font-size:18px;
+	color: green;
+}
+#foldermain {
+	padding-bottom: 5px;
+}
+/*.songlabel {
+	z-index: 110;
+	top: 3.3em;
+	position: absolute;
+	font-size: 12px;
+	font-weight: bold;
+	width: 20em;
+}*/
+.songlabel {
+	z-index: 9999;
+	top: 2.3em;
+	left: 3em;
+	color: white;
+	position: fixed;
+	font-size: 11px;
+	font-weight: bold;
+	width: 25em;
 }
 
-@media screen and (max-width: 638px) {
-
-body {
-	padding: 1em 1em;
-}
-
-section, nav, footer {
-	float: none;
-	width: auto;
-	max-width: 100%;
-	margin: 0 auto 1em;
-	}
-
-header {
-	margin-bottom: 1.5em;
-	}
-
-nav {
-	text-align: center;
-	}
-
-.categories li {
-	margin: 0 0 0.5em;
-	}
-
-footer {
-	text-align: center;
-	max-width: 80%;
-	padding: 0.5em 0;
-	margin: 0 auto 2em;
-	}
-
-.end {
-	color: #000 !important;
-	}
-
-}
