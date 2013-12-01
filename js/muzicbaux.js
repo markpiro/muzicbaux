@@ -61,7 +61,13 @@ var MBUtils = {
 		});
 		return false;
 	},
-	getSongLinks: function(links) {
+	getSongLinks: function(mylinks) {
+		var links = [];
+		for (i=0; i<mylinks.length; i++) {
+			if (mylinks[i].indexOf('.mp3' || '.m4a') !== -1) {
+				links.push(mylinks[i]);
+			}
+		}
 		$('#songmain').append("<div id=\'songs\'</div>");
 		for (i=0; i<links.length; i++) {
 			var link = document.createElement('a');
@@ -69,12 +75,12 @@ var MBUtils = {
 			var c = b.split("/");
 			var d = c[c.length-1];
 			link.href = '#';
+			link.className = 'songlink';
 			link.innerHTML = d;
 			//link.onclick = function() {MBUtils.createSongLinks(this);};
 			link.onclick = function() {MBUtils.getSongUrl(this); return false;};
 			link.id = i;
 			link.path = links[i];
-			link.className = 'songlink';
 			$("#songs").append(link);
 			$(link).wrap('<p></p>');
 		}
