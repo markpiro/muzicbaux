@@ -54,9 +54,30 @@ a.folderlink{
 	font-size:18px;
 	color: green;
 	display: block;
-	padding-left: 20px;
+	padding-left: 45px;
 	padding-top: 15px;
-	padding-bottom: 15px;	
+	padding-bottom: 15px;
+}
+span.folderimg{
+	display: inline-block;
+	margin-top: 20px;
+	opacity: .5;
+	width: 14px;
+	height: 14px;
+	background: transparent url(https://dl.dropbox.com/u/2066680/muzicbaux/folder.png) no-repeat;
+	background-size: 14px 14px;
+}
+a.folderimg{
+	position: absolute;
+	width: 44px;
+	text-align: center;
+}
+a.playbutton{
+	position: absolute;
+	top: 0;
+	right: 0;
+	color: white;
+	width: 40px;
 }
 p{
 	margin: 0px;
@@ -66,6 +87,9 @@ audio{
 	width: 150px;
 	display: block;
 	height: 25px;
+}
+.hidden{
+	display: none;
 }
 
 #player{

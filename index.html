@@ -22,8 +22,9 @@
 	<div class="view" id="view-home">
 		<header>
 			<div class="header">
-				<!--<div class="controls"><h1 style="margin: 0 20px;"><a href="#" class="homelink" id="Music/tracks/" onclick="MBUtils.createFolderLinks(this); return false;">muzicbaux</a></h1></div>-->
-				<div class="controls"><h1 style="margin: 0 20px;"><a href="#/" class="homelink" id="Music/tracks/">muzicbaux</a></h1></div>
+				<div class="controls"><h1 style="margin: 0 20px;"><a href="#/" class="homelink" id="Music/tracks/">muzicbaux</a></h1>
+				</div>
+				<a href="#" class="playbutton" onclick="MBPlayer.playPause(); return false;">P</a>
 				<!--<div class="controls" id="player"></div>-->
 			</div>
 		</header>
@@ -32,7 +33,12 @@
 				<div class="scrollview-content">
 					<div id="foldermain"></div>
 					<div id="songmain"></div>
-					<div id="songs"></div> 
+					<div id="songs"></div>
+					<div class="hidden">
+						<p>Title</p>
+						<p>Artist</p>
+						<p>Controls</p>
+					</div>
 				</div>
 			</div>
 		</div>

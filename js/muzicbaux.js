@@ -1,14 +1,14 @@
-(function(w) {
-	var d = w.document;
+//(function(w) {
+	//var d = w.document;
 	var loadingStuff = false;
 	
 	function checkOverflow() {
 		var el = $('.scrollview-inner')[0];
 		if (el.offsetHeight < el.scrollHeight) {
-			$(d).unbind('touchmove');
+			$(document).unbind('touchmove');
 		}
 		else {
-			$(d).bind('touchmove', function(e){e.preventDefault(); });
+			$(document).bind('touchmove', function(e){e.preventDefault(); });
 		}
 	}
 
@@ -33,8 +33,8 @@
 				this.renderFolder(this.folderList);
 			}
 			if (this.songList.length > 0) {
-				if (w.location.hash == '#/' || '') return;
-				this.renderSong(this.songList);
+				if (window.location.hash == '#/' || '') return;
+				this.renderSongs(this.songList);
 			}
 			checkOverflow();
 		},
@@ -51,22 +51,25 @@
 			});
 		},
 		renderFolder: function(links) {
-			$('#foldermain').append("<div id=\'folders\'</div>");
+			$('#foldermain').append('<div id="folders"></div>');
 			for (i=0; i<links.length; i++) {
-				var link = d.createElement('a');
+				var link = document.createElement('a');
+				var img = document.createElement('a');
 				var b = unescape(links[i]);
 				var c = b.split("/");
 				var name = c[c.length-1];
-				link.id = links[i];
-				link.className = 'folderlink';
-				link.href = '#/folder/' + link.id.split('/Music/tracks/')[1];
-				link.innerHTML = name;
-				//link.onclick = function() {MBUtils.createFolderLinks(this); MBUtils.updateCurrentFolder(this);};
-				$("#folders").append(link);
-				$(link).wrap('<p></p>');
+				//link.id = links[i];
+				var linkhref = '#/folder/' + links[i].split('/Music/tracks/')[1];
+				var fhtml = [
+					'<p>',
+					'<a href="' + linkhref + '" class="folderimg"><span class="folderimg"></span></a>',
+					'<a href="' + linkhref + '" class="folderlink">' + name + '</a>',
+					'</p>'
+				].join('\n');
+				$("#folders").append(fhtml);
 			}
 		},
-		renderSong: function(mylinks) {
+		renderSongs: function(mylinks) {
 			var links = [];
 			for (i=0; i<mylinks.length; i++) {
 				if (mylinks[i].indexOf('.mp3' || '.m4a' || '.flac') !== -1) {
@@ -75,23 +78,23 @@
 			}
 			$('#songmain').append("<div id=\'songs\'</div>");
 			for (i=0; i<links.length; i++) {
-				var link = d.createElement('a');
+				var link = document.createElement('a');
 				var b = unescape(links[i]);
 				var c = b.split("/");
 				var name = c[c.length-1];
-				link.id = i;
-				link.href = '#/song/' + name;
-				link.className = 'songlink';
-				link.innerHTML = name;
-				link.onclick = function() {MBUtils.getSongUrl(this); return false;};
-				link.path = links[i];
-				$("#songs").append(link);
-				$(link).wrap('<p></p>');
+				var songpath = links[i];
+				var songhref = '#/song' + songpath;
+				var shtml = [
+					'<p>',
+					'<a href="' + songhref + '" class="songlink">' + name + '</a>',
+					'</p>'
+				].join('\n');
+				$("#songs").append(shtml);
 			}
 		},
 		getSongUrl: function(song) {
-			var cache = Dropbox.getData("cache." + song.path);
-			var expire = Dropbox.getData("expires." + song.path);
+			var cache = Dropbox.getData("cache." + song);
+			var expire = Dropbox.getData("expires." + song);
 			var e = new Date(expire).getTime();
 			var now = new Date().getTime();
 			if (cache != 'null' && now <= e-600000) {
@@ -99,12 +102,12 @@
 				console.log('using cache');
 				MBPlayer.pickSong(song, url);
 			} else {
-				Dropbox.getMedia(song.path, function(data) {
+				Dropbox.getMedia(song, function(data) {
 					console.log('caching song');
 					var url = data.url;
 					var expire = data.expires;
-					Dropbox.storeData("cache." + song.path, url);
-					Dropbox.storeData("expires." + song.path, expire);
+					Dropbox.storeData("cache." + song, url);
+					Dropbox.storeData("expires." + song, expire);
 					MBPlayer.pickSong(song, url);
 				});
 			}
@@ -196,11 +199,15 @@
 			var path = location.hash.split('#/folder/')[1];
 			MBUtils.render('Music/tracks/' + path);
 		})
+		.add(/^\/song\/(.+)$/i, 'folder', function() {
+			var path = location.hash.split('#/song')[1];
+			MBUtils.getSongUrl(path);
+		})
 
-	w.onload = Dropbox.setup(function() {
+	window.onload = Dropbox.setup(function() {
 		if (Dropbox.accessToken) {
 			MBPlayer.createPlayer();
 		}
 		ruto.init();
 	});
-})(window);
+//})(window);
