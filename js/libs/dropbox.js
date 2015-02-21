@@ -43,7 +43,7 @@ Dropbox.authHTML5 = true;
 Dropbox.cache = true;
 
 //Set this to your authorization callback URL
-Dropbox.authCallback = "http://bit.ly/1b8Wh8t";
+Dropbox.authCallback = "https://dl.dropboxusercontent.com/u/2066680/muzicbaux/index.html";
 
 //Maximum number of files to list from a directory. Default 10k
 Dropbox.fileLimit = 10000;
@@ -327,7 +327,6 @@ Dropbox.getHash = function(path) {
 }
 
 Dropbox.getFolder = function(path,callback) {
-	console.log(path);
 	//If caching is enabled, get the hash of the requested folder
 	var hash = Dropbox.getHash(path);
 	

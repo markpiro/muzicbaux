@@ -8,59 +8,38 @@
 	<meta name="viewport" content="width=320.1">
 	<meta name="apple-mobile-web-app-capable" content="yes" />
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
-	<script type="text/javascript" src="js/libs/dropbox.js"></script>
-	<script type="text/javascript" src="js/muzicbaux.js"></script>
 	<script type="text/javascript" src="js/libs/oauth.js"></script>
 	<script type="text/javascript" src="js/libs/sha1.js"></script>
+	<script type="text/javascript" src="js/libs/dropbox.js"></script>
+	<script type="text/javascript" src="js/libs/ruto.js"></script>
 	<link href="css/muzicbaux.css" rel="stylesheet" media="screen">
 	<link rel="shortcut icon" href="https://dl.dropbox.com/u/2066680/muzicbaux/mb_favicon.png"/>
-	
+</head>
+
 <body>
 	
-<div class="navbar navbar-inverse navbar-fixed-top">
-	<div class="navbar-inner">
-		<div class="nav-top">
-			<div class="row">
-				<div class="threecol" style="color: white"><a href="#" id="Music/tracks/" class="home ctrl" onclick="MBUtils.createFolderLinks(this); return false;">muzicbaux</a></div>
-				<div class="sixcol" id="player"></div>
-				<div class="threecol last"></div>
+<div class="app">
+	<div class="view" id="view-home">
+		<header>
+			<div class="header">
+				<!--<div class="controls"><h1 style="margin: 0 20px;"><a href="#" class="homelink" id="Music/tracks/" onclick="MBUtils.createFolderLinks(this); return false;">muzicbaux</a></h1></div>-->
+				<div class="controls"><h1 style="margin: 0 20px;"><a href="#/" class="homelink" id="Music/tracks/">muzicbaux</a></h1></div>
+				<!--<div class="controls" id="player"></div>-->
 			</div>
-			<!--<a href="https://dl.dropbox.com/u/2066680/muzicbaux/index.html"><span class="main-nav"><strong>muzicbaux<strong></span></a>-->
-		</div>
-	</div>
-</div>
-
-<div id="songtitle" class="songlabel"></div>
-
-<div class="container">
-	<div class ="row">
-		<div class="twelvecol" id="foldermain"></div>
-		<div class="twelvecol" id="songmain"></div>
-		<div id="songs"></div><br><br><br>
-	</div>
-	<!--<button type="clear" onclick="MBUtils.clearStorage()">clear storage</button><br>-->
-</div>
-
-<div class="navbar navbar-inverse navbar-fixed-bottom">
-	<div class="navbar-inner">
-		<div class="nav-bottom">
-			<div class="row">
-				<div class="fourcol"><a class="ctrl" href="#" onclick="MBPlayer.previousSong(); return false;"><center>prev</center></a></div>
-				<div class="fourcol"><a class="ctrl" href="#" onclick="MBPlayer.playPause(); return false;"><center>play</a></center></div>
-				<div class="fourcol last"><a class="ctrl" href="#" onclick="MBPlayer.nextSong(); return false;"><center>next</a></center></div>
+		</header>
+		<div class="scrollview">
+			<div class="scrollview-inner">
+				<div class="scrollview-content">
+					<div id="foldermain"></div>
+					<div id="songmain"></div>
+					<div id="songs"></div> 
+				</div>
 			</div>
 		</div>
 	</div>
 </div>
-
-<script type="text/javascript">	
-	window.onload = Dropbox.setup(function() {
-		if (Dropbox.accessToken) {
-			MBPlayer.createPlayer();
-			MBUtils.createFolderLinks('Music/tracks/');
-		}
-	});
-</script>
-
 </body>
+
+<script type="text/javascript" src="js/muzicbaux.js"></script>
+
 </html>
